@@ -9,12 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     var hmv = HomeVM()
+    let screen = UIScreen.main.bounds
     var body: some View {
         ZStack {
             Color.black
                 .ignoresSafeArea()
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack {
+                    TopRowButtons()
+                    
+                    TopMoviePreview(movie: exampleMovie1)
+                        .frame(width: screen.width)
+                        .padding(.top,-110) //push it up
+                        .zIndex(-1) // upper hstack will never appear without it because we're in zstack and it's zindex will auto assigned to is children in assecnding order so if we make that -1 and the above it will be 0
                     ForEach(hmv.allCategories,id: \.self){cat in
                         VStack{
                             HStack{
@@ -43,3 +50,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
